@@ -15,4 +15,4 @@
 -   使用公钥验证
     -   对方使用公钥 `e` 进行检验，验证数字签名的正确性
 
-Proposed by suburbiaXX & hanghang214
+Proposed by SuburbiaXX & hanghang214
