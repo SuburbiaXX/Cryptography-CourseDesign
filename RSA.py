@@ -1,6 +1,46 @@
 import random
 from math import sqrt
+from AES import  *
 
+"""
+if __name__ == '__main__':
+
+    aes = AES()
+    key = 0x000102030405060708090a0b0c0d0e0f
+    RoundKeys = aes.round_key_generator(key)
+
+    # 加密
+    plaintext = 0x00112233445566778899aabbccddeeff
+    # 0x00112233445566778899aabbccddeeff -> b'\x00\x11"3DUfw\x88\x99\xaa\xbb\xcc\xdd\xee\xff'
+    plaintext = aes.num_2_16bytes(plaintext)
+    ciphertext = aes.aes_encrypt(plaintext, RoundKeys)
+    print('ciphertext = ' + hex(aes._16bytes2num(ciphertext)))
+
+    # 解密
+    ciphertext = 0x69c4e0d86a7b0430d8cdb78070b4c55a
+    ciphertext = aes.num_2_16bytes(ciphertext)
+    plaintext = aes.aes_decrypt(ciphertext, RoundKeys)
+    print('plaintext = ' + hex(aes._16bytes2num(plaintext)))
+"""
+
+def EncryptAES(RawStr,key = 0x000102030405060708090a0b0c0d0e0f):
+    aes = AES()
+    RoundKeys = aes.round_key_generator(key)
+
+    # 加密
+    plaintext = int(RawStr,16)
+    plaintext = aes.num_2_16bytes(plaintext)
+    ciphertext = aes.aes_encrypt(plaintext, RoundKeys)
+    # print('ciphertext = ' + hex(aes._16bytes2num(ciphertext)))
+    return str(hex(aes._16bytes2num(ciphertext)))[2:]
+# def DecryptAES(RawStr):
+#
+#     ase = AES()
+#     # 解密
+#     ciphertext = hex(int(RawStr,16))
+#     ciphertext = aes.num_2_16bytes(ciphertext)
+#     plaintext = aes.aes_decrypt(ciphertext, RoundKeys)
+#     print('plaintext = ' + hex(aes._16bytes2num(plaintext)))
 
 # 快速幂
 def fast_power(base, power, n):
@@ -108,6 +148,15 @@ if __name__ == '__main__':
     # print("phi = ", phi)
     print("e = ", e)
     print("d = ", d)
+
+    message = []
+
+    rawmessage = "4a083fcb88204f28ad57f6ebbaf729ec"
+    rawmessage = EncryptAES(rawmessage)
+
+    for i in range (0,4):
+        message.append(hex(int(rawmessage[i*8:8+i*8], 16)))
+    print(message)
 
     message = [0x4a083fcb,0x88204f28,0xad57f6eb,0xbaf729ec]
 
