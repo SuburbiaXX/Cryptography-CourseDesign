@@ -109,10 +109,7 @@ if __name__ == '__main__':
     print("e = ", e)
     print("d = ", d)
 
-    message = 0x4a083fcb88204f28ad57f6ebbaf729ec
-    message = message % n
-    watermark = 1
-    for i in range(0,d):
-        watermark = watermark * message
-        watermark = watermark % n
-    print("watermark = ",watermark)
+    message = [0x4a083fcb,0x88204f28,0xad57f6eb,0xbaf729ec]
+
+    for i in range(0,4):
+        print("watermark "+str(i)+" :"+str(fast_power(message[i],d,n)))
