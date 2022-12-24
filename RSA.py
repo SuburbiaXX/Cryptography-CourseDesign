@@ -108,3 +108,11 @@ if __name__ == '__main__':
     # print("phi = ", phi)
     print("e = ", e)
     print("d = ", d)
+
+    message = 0x4a083fcb88204f28ad57f6ebbaf729ec
+    message = message % n
+    watermark = 1
+    for i in range(0,d):
+        watermark = watermark * message
+        watermark = watermark % n
+    print("watermark = ",watermark)
