@@ -274,29 +274,14 @@ def GetRawInfo_File(path):
     RawStr = RawStr.encode("utf-8")
     file.close()
     RawStr = str(RawStr)
-
+    RawStr = RawStr[2:]
     StrLen = len(RawStr)
-    StudentNumber = RawStr[2:11]
-    StudentName = ""
-    for i in range(13, StrLen):
-        if (i + 1) // 2 % 2 != 0:
-            StudentName = StudentName + RawStr[i]
-
-    StudentNumber = TotalTransferDecimalToBin(StudentNumber)
-    StudentName = TotalTransferHexToBin(StudentName)
-    RawMD5 = StudentNumber + StudentName
-    return RawMD5
+    RawStr = RawStr[:StrLen - 1]
+    return RawStr
 
 def GetRawInfo_Text(text):
     RawStr = str(text)
+    RawStr = RawStr[2:]
     StrLen = len(RawStr)
-    StudentNumber = RawStr[2:11]
-    StudentName = ""
-    for i in range(13, StrLen):
-        if (i + 1) // 2 % 2 != 0:
-            StudentName = StudentName + RawStr[i]
-
-    StudentNumber = TotalTransferDecimalToBin(StudentNumber)
-    StudentName = TotalTransferHexToBin(StudentName)
-    RawMD5 = StudentNumber + StudentName
-    return RawMD5
+    RawStr = RawStr[:StrLen-1]
+    return RawStr

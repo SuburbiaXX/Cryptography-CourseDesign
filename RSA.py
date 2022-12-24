@@ -25,6 +25,7 @@ if __name__ == '__main__':
 
 def EncryptAES(RawStr,key = 0x000102030405060708090a0b0c0d0e0f):
     aes = AES()
+    key = random.randint(0x11111111111111111111111111111111,0xffffffffffffffffffffffffffffffff)
     RoundKeys = aes.round_key_generator(key)
 
     # 加密
@@ -161,4 +162,4 @@ if __name__ == '__main__':
     message = [0x4a083fcb,0x88204f28,0xad57f6eb,0xbaf729ec]
 
     for i in range(0,4):
-        print("watermark "+str(i)+" :"+str(fast_power(message[i],d,n)))
+        print("watermark "+str(i)+" :"+str(hex(fast_power(message[i],d,n)))[2:])
