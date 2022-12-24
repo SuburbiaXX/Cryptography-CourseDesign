@@ -86,7 +86,7 @@ def ex_gcd(a, b):
 
 
 # 生成公钥和私钥
-def generate_key():
+def generate_key(phi):
     while (1):
         e = random.randint(2, phi - 1)
         gcd, d, _ = ex_gcd(e, phi)
@@ -98,7 +98,7 @@ def generate_key():
 
 
 if __name__ == '__main__':
-    p, q = generate_prime(17, 17)
+    p, q = generate_prime(100, 100)
     print("p = ", p)
     print("q = ", q)
     n = p * q
