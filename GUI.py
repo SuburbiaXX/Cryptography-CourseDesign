@@ -5,7 +5,7 @@ from MD5 import *
 from MD5 import MD5
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
-
+from RSA import *
 
 class GUI(QWidget):
     def __init__(self):
@@ -51,6 +51,7 @@ class GUI(QWidget):
         mes = MD5(GetRawInfo_File(filename))
         mes.fill_text()
         result = mes.group_processing()
+        result = EncryptAES(result) # 这一步添加AES操作
 
         self.textBrowser1.setPlainText(result)
 
@@ -69,7 +70,7 @@ class GUI(QWidget):
         mes = MD5(GetRawInfo_Text(text))
         mes.fill_text()
         result = mes.group_processing()
-
+        result = EncryptAES(result) # 这一步添加AES操作
         self.textBrowser1.setPlainText(result)
 
 
