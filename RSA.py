@@ -95,7 +95,6 @@ def is_prime(n):
 
 
 # 随机生成大素数
-# TODO -> 可指定P 和 Q 的位数，后期可以改为通过UI输入
 def generate_prime(PDigits=17, QDigits=17):
     while (1):
         tempstr = ''
