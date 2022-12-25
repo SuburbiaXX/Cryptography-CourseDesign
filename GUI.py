@@ -5,15 +5,22 @@ import re
 from MD5 import *
 from MD5 import MD5
 from RSA import *
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPalette, QBrush, QPixmap, QIcon
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from RSA import *
 
+
 class Ui_MainWindow(QWidget):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(753, 691)
+        MainWindow.setFixedSize(850, 900)
+        MainWindow.setWindowIcon(QIcon('icon.png'))
+        # 窗口渐变
+        palette = QPalette()
+        palette.setBrush(QPalette.Background, QBrush(QPixmap('background.jpg')))
+        MainWindow.setPalette(palette)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -118,49 +125,61 @@ class Ui_MainWindow(QWidget):
 
         self.textEdit.setFont(QFont("Timers", 14))
         self.textEdit.setPlaceholderText("请输入需要进行MD5操作的字符串")
+        self.textEdit.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.textBrowser.setFont(QFont("Timers", 14))
         self.textBrowser.setPlaceholderText("进行MD5操作后的结果")
+        self.textBrowser.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton.setText(_translate("MainWindow", "执行MD5"))
-        self.pushButton.setFont(QFont("Timers", 12))
+        self.pushButton.setFont(QFont("Timers", 10))
         self.pushButton.clicked.connect(self.exec_text)
         self.pushButton.setFixedSize(120, 50)
+        self.pushButton.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_2.setText(_translate("MainWindow", "选择txt文件"))
-        self.pushButton_2.setFont(QFont("Timers", 12))
+        self.pushButton_2.setFont(QFont("Timers", 10))
         self.pushButton_2.clicked.connect(self.exec_file)
+        self.pushButton_2.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_3.setText(_translate("MainWindow", "清空"))
-        self.pushButton_3.setFont(QFont("Timers", 12))
+        self.pushButton_3.setFont(QFont("Timers", 10))
         self.pushButton_3.clicked.connect(self.clear_text)
+        self.pushButton_3.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.textEdit_2.setFont(QFont("Timers", 14))
         self.textEdit_2.setPlaceholderText('请输入构造RSA所希望的两个大素数的位数,随意隔开即可')
+        self.textEdit_2.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.textBrowser_2.setFont(QFont("Timers", 14))
         self.textBrowser_2.setPlaceholderText('使用的RSA签名系统情况\n对上述MD5进行签名的结果')
+        self.textBrowser_2.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_7.setText(_translate("MainWindow", "进行消息签名"))
-        self.pushButton_7.setFont(QFont("Timers", 12))
+        self.pushButton_7.setFont(QFont("Timers", 10))
         self.pushButton_7.clicked.connect(self.exec_rsa_sign)
+        self.pushButton_7.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_8.setText(_translate("MainWindow", "清空"))
-        self.pushButton_8.setFont(QFont("Timers", 12))
+        self.pushButton_8.setFont(QFont("Timers", 10))
         self.pushButton_8.setFixedSize(120, 50)
         self.pushButton_8.clicked.connect(self.clear_text2)
+        self.pushButton_8.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.textBrowser_3.setFont(QFont("Timers", 14))
         self.textBrowser_3.setPlaceholderText("进行验证操作后的结果")
+        self.textBrowser_3.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_5.setText(_translate("MainWindow", "签名验证"))
         self.pushButton_5.setFixedSize(120, 50)
         self.pushButton_5.clicked.connect(self.exec_rsa_verify)
-        self.pushButton_5.setFont(QFont("Timers", 12))
+        self.pushButton_5.setFont(QFont("Timers", 10))
+        self.pushButton_5.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
         self.pushButton_6.setText(_translate("MainWindow", "清空"))
-        self.pushButton_6.setFont(QFont("Timers", 12))
+        self.pushButton_6.setFont(QFont("Timers", 10))
         self.pushButton_6.clicked.connect(self.textBrowser_3.clear)
+        self.pushButton_6.setStyleSheet("background-color:rgba(255,255,255,0.72);")
 
     # 处理文件中获取的字符串，进行MD5后直接写入textBrowser
     def exec_file(self):
@@ -178,8 +197,10 @@ class Ui_MainWindow(QWidget):
         mes = MD5(GetRawInfo_File(filename))
         mes.fill_text()
         result = mes.group_processing()
-        result = EncryptAES(result)  # 这一步添加AES操作
-
+        result, key = EncryptAES(result)  # 这一步添加AES操作
+        result = str(result)
+        result = "结果为:\n" + result
+        result += "\n\n使用标准128位AES加密的种子密钥为:" + str(hex(key))
         self.textBrowser.setPlainText(result)
 
     # 处理直接输入的字符串，进行MD5后直接写入textBrowser
@@ -198,7 +219,10 @@ class Ui_MainWindow(QWidget):
         mes = MD5(GetRawInfo_Text(text))
         mes.fill_text()
         result = mes.group_processing()
-        result = EncryptAES(result)  # 这一步添加AES操作
+        result, key = EncryptAES(result)  # 这一步添加AES操作
+        result = str(result)
+        result = "结果为:\n" + result
+        result += "\n\n使用标准128位AES加密的种子密钥为:" + str(hex(key))
         self.textBrowser.setPlainText(result)
 
     def exec_rsa_sign(self):
@@ -240,6 +264,11 @@ class Ui_MainWindow(QWidget):
 
         # 进行RSA签名
         message = self.textBrowser.toPlainText()
+        # 匹配中文前面的十六进制数字
+        pattern = re.compile(r'[0-9a-fA-F]+')
+        temp = pattern.findall(message)
+        message = temp[0]
+        # print(message)
         # 将字符串平均划分成4部分
         mes = [message[i:i + 8] for i in range(0, len(message), 8)]  # 8个字符一组
         # print(mes)
@@ -252,7 +281,7 @@ class Ui_MainWindow(QWidget):
         for i in range(len(mes_hex)):
             mes_hex[i] = fast_power(mes_hex[i], d, n)
         # 输出结果
-        result = "签名结果为：\n"
+        result = "\n签名结果为：\n"
         for i in range(len(mes_hex)):
             result += str(hex(mes_hex[i])) + "\n"
         self.textBrowser_2.append(result)
@@ -291,7 +320,7 @@ class Ui_MainWindow(QWidget):
         for i in range(len(mes)):
             mes[i] = fast_power(mes[i], e, n)
 
-        result = "使用公钥e = " + str(e) + "\n验证结果为：\n"
+        result = "使用公钥e = " + str(e) + "\n\n验证结果为：\n"
         for i in range(len(mes)):
             result += str(hex(mes[i])) + "\n"
         self.textBrowser_3.setPlainText(result)

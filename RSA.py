@@ -1,6 +1,6 @@
 import random
 from math import sqrt
-from AES import  *
+from AES import *
 
 """
 if __name__ == '__main__':
@@ -23,17 +23,20 @@ if __name__ == '__main__':
     print('plaintext = ' + hex(aes._16bytes2num(plaintext)))
 """
 
-def EncryptAES(RawStr,key = 0x000102030405060708090a0b0c0d0e0f):
+
+def EncryptAES(RawStr):
     aes = AES()
-    key = random.randint(0x11111111111111111111111111111111,0xffffffffffffffffffffffffffffffff)
+    key = random.randint(0x11111111111111111111111111111111, 0xffffffffffffffffffffffffffffffff)
     RoundKeys = aes.round_key_generator(key)
 
     # 加密
-    plaintext = int(RawStr,16)
+    plaintext = int(RawStr, 16)
     plaintext = aes.num_2_16bytes(plaintext)
     ciphertext = aes.aes_encrypt(plaintext, RoundKeys)
     # print('ciphertext = ' + hex(aes._16bytes2num(ciphertext)))
-    return str(hex(aes._16bytes2num(ciphertext)))[2:]
+    return str(hex(aes._16bytes2num(ciphertext)))[2:], key
+
+
 # def DecryptAES(RawStr):
 #
 #     ase = AES()
@@ -154,11 +157,11 @@ if __name__ == '__main__':
     rawmessage = "4a083fcb88204f28ad57f6ebbaf729ec"
     rawmessage = EncryptAES(rawmessage)
 
-    for i in range (0,4):
-        message.append(hex(int(rawmessage[i*8:8+i*8], 16)))
+    for i in range(0, 4):
+        message.append(hex(int(rawmessage[i * 8:8 + i * 8], 16)))
     print(message)
 
-    message = [0x4a083fcb,0x88204f28,0xad57f6eb,0xbaf729ec]
+    message = [0x4a083fcb, 0x88204f28, 0xad57f6eb, 0xbaf729ec]
 
-    for i in range(0,4):
-        print("watermark "+str(i)+" :"+str(hex(fast_power(message[i],d,n)))[2:])
+    for i in range(0, 4):
+        print("watermark " + str(i) + " :" + str(hex(fast_power(message[i], d, n)))[2:])
