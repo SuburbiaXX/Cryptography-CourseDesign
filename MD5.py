@@ -4,7 +4,6 @@ import math
 # 162020228陈泰伦 -> 前9位是数字，后三位是汉字
 # b'162020228\xe9\x99\x88\xe6\xb3\xb0\xe4\xbc\xa6' 需要448位，填充10000...
 # 一个汉字转三字节，也就是24位，两到四个汉字就是六到十二字节，也就是48~96位，加上数字位的int类型8位，总共是56~104位
-from Crypto.Hash import MD5
 
 def HexadecimalToBinary(str):
     """
@@ -15,42 +14,6 @@ def HexadecimalToBinary(str):
     H2B_map = {'0': '0000', '1': '0001', '2': '0010', '3': '0011', '4': '0100', '5': '0101', '6': '0110', '7': '0111',
                '8': '1000', '9': '1001', 'a': '1010', 'b': '1011', 'c': '1100', "d": '1101', 'e': '1110', 'f': '1111'}
     return H2B_map[str]
-    # ReturnStr = ""
-    # if (str >= '0') & (str <= '9'):
-    #     if str == '0':
-    #         ReturnStr = '0000'
-    #     if str == '1':
-    #         ReturnStr = '0001'
-    #     if str == '2':
-    #         ReturnStr = '0010'
-    #     if str == '3':
-    #         ReturnStr = '0011'
-    #     if str == '4':
-    #         ReturnStr = '0100'
-    #     if str == '5':
-    #         ReturnStr = '0101'
-    #     if str == '6':
-    #         ReturnStr = '0110'
-    #     if str == '7':
-    #         ReturnStr = '0111'
-    #     if str == '8':
-    #         ReturnStr = '1000'
-    #     if str == '9':
-    #         ReturnStr = '1001'
-    # else:
-    #     if str == "a":
-    #         ReturnStr = '1010'
-    #     if str == "b":
-    #         ReturnStr = '1011'
-    #     if str == "c":
-    #         ReturnStr = '1100'
-    #     if str == "d":
-    #         ReturnStr = '1101'
-    #     if str == "e":
-    #         ReturnStr = '1110'
-    #     if str == "f":
-    #         ReturnStr = '1111'
-    # return ReturnStr
 
 
 def TotalTransferHexToBin(str):

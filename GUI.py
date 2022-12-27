@@ -241,6 +241,9 @@ class Ui_MainWindow(QWidget):
         # 正则匹配字符串中的数字
         pattern = re.compile(r'\d+')
         temp = pattern.findall(text)
+        if len(temp) != 2:
+            QMessageBox.information(self, '提示', '请正确输入两个数的位数')
+            return
         # print(temp)
         r = []
         r.append(int(temp[0]))
